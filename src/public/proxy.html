@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="优质机场推荐 - 高速稳定科学上网服务">
+    <meta name="keywords" content="机场推荐、科学上网、加速器、翻墙、代理服务">
+    <meta name="color-scheme" content="dark light">
+    <title>优质机场推荐 - 科学上网服务</title>
+    <link rel="icon" href="/favicon.ico">
+    <style>
+        :root {
+            --background: #ffffff;
+            --foreground: #0f172a;
+            --card: #ffffff;
+            --card-foreground: #0f172a;
+            --primary: #2563eb;
+            --primary-foreground: #f8fafc;
+            --secondary: #f1f5f9;
+            --secondary-foreground: #0f172a;
+            --muted: #f1f5f9;
+            --muted-foreground: #64748b;
+            --accent: #f1f5f9;
+            --accent-foreground: #0f172a;
+            --border: #e2e8f0;
+            --input: #ffffff;
+            --ring: #2563eb;
+            --radius: 0.5rem;
+        }
+
+        .dark {
+            --background: #0f172a;
+            --foreground: #f8fafc;
+            --card: #1e293b;
+            --card-foreground: #f8fafc;
+            --primary: #3b82f6;
+            --primary-foreground: #f8fafc;
+            --secondary: #1e293b;
+            --secondary-foreground: #f8fafc;
+            --muted: #1e293b;
+            --muted-foreground: #94a3b8;
+            --accent: #1e293b;
+            --accent-foreground: #f8fafc;
+            --border: #334155;
+            --input: #1e293b;
+            --ring: #3b82f6;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background: #0f172a;
+                --foreground: #f8fafc;
+                --card: #1e293b;
+                --card-foreground: #f8fafc;
+                --primary: #3b82f6;
+                --primary-foreground: #f8fafc;
+                --secondary: #1e293b;
+                --secondary-foreground: #f8fafc;
+                --muted: #1e293b;
+                --muted-foreground: #94a3b8;
+                --accent: #1e293b;
+                --accent-foreground: #f8fafc;
+                --border: #334155;
+                --input: #1e293b;
+                --ring: #3b82f6;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: var(--background);
+            color: var(--foreground);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            width: 100%;
+            border-bottom: 1px solid var(--border);
+            background-color: var(--background);
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+
+        .dark .navbar {
+            background-color: rgba(15, 23, 42, 0.95);
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--foreground);
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+
+        .logo-icon {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-link {
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            color: var(--muted-foreground);
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--foreground);
+            background-color: var(--muted);
+        }
+
+        .theme-toggle {
+            padding: 0.5rem;
+            border: none;
+            border-radius: var(--radius);
+            background-color: transparent;
+            color: var(--muted-foreground);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--muted);
+            color: var(--foreground);
+        }
+
+        .main {
+            flex: 1;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--muted-foreground);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out 0.2s forwards;
+        }
+
+        .card-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-description {
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
+        }
+
+        .promo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .promo-card {
+            background: linear-gradient(135deg, var(--card), var(--muted));
+            border: 2px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary);
+        }
+
+        .promo-card.featured {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, var(--card), #e0e7ff);
+        }
+
+        .promo-tag {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .promo-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .promo-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--foreground);
+        }
+
+        .promo-desc {
+            color: var(--muted-foreground);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .promo-features {
+            margin-bottom: 1.5rem;
+        }
+
+        .promo-features li {
+            list-style: none;
+            padding: 0.25rem 0;
+            font-size: 0.85rem;
+            color: var(--muted-foreground);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .promo-features li::before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .promo-card.featured .promo-features li::before {
+            color: var(--primary);
+        }
+
+        .promo-btn {
+            display: block;
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            color: var(--primary-foreground);
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .promo-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .promo-card.featured .promo-btn {
+            background: linear-gradient(135deg, #1d4ed8, #2563eb);
+        }
+
+        .promo-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--foreground);
+            margin: 1rem 0;
+        }
+
+        .promo-card.featured .promo-price {
+            color: var(--primary);
+        }
+
+        .promo-discount {
+            color: #ef4444;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .promo-card.featured::before {
+            content: "推荐";
+            position: absolute;
+            top: -2rem;
+            right: -2rem;
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            color: white;
+            padding: 0.5rem 2rem;
+            transform: rotate(45deg);
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+
+        .promo-card.featured::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), #3b82f6);
+        }
+
+        .card-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .disclaimer {
+            font-size: 0.75rem;
+            color: var(--muted-foreground);
+            line-height: 1.6;
+        }
+
+        .toast {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--primary);
+            color: var(--primary-foreground);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1001;
+            display: none;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .footer {
+            padding: 2rem 1rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--muted-foreground);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .github-link:hover {
+            color: var(--foreground);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: var(--background);
+                border: 1px solid var(--border);
+                border-top: none;
+                border-radius: 0 0 12px 12px;
+                padding: 1rem;
+                flex-direction: column;
+                gap: 0.5rem;
+                z-index: 1000;
+                transform: translateY(-100vh);
+                transition: transform 0.3s ease;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+            }
+            
+            .mobile-menu-toggle {
+                display: block !important;
+                background: none;
+                border: none;
+                color: var(--foreground);
+                font-size: 1.5rem;
+                cursor: pointer;
+                padding: 0.5rem;
+                border-radius: var(--radius);
+                transition: background-color 0.2s;
+            }
+            
+            .mobile-menu-toggle:hover {
+                background-color: var(--muted);
+            }
+            
+            .navbar-container {
+                justify-content: space-between !important;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .promo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .mobile-menu-toggle {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">
+                    ⚡
+                </div>
+                加速服务
+            </a>
+            
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                ☰
+            </button>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="/" class="nav-link">🚀 GitHub加速</a>
+                <a href="/proxy.html" class="nav-link active">🌐 优质机场</a>
+                <a href="/images.html" class="nav-link">🐳 离线镜像下载</a>
+                <a href="/search.html" class="nav-link">🔍 镜像搜索</a>
+                
+                <button class="theme-toggle" id="themeToggle">
+                    🌙
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main">
+        <div class="container">
+            <div class="hero">
+                <h1 class="hero-title">性价比机场推荐</h1>
+                <p class="hero-subtitle">
+                    精选高速稳定科学上网服务，支持全球加速，隐私安全，性价比高
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        🌟 推荐机场
+                    </h2>
+                    <p class="card-description">
+                        精选高速稳定科学上网服务
+                    </p>
+                </div>
+
+                <div class="promo-grid">
+                    <div class="promo-card">
+                        <span class="promo-tag">入门包</span>
+                        <span class="promo-icon">青铜</span>
+                        <h3 class="promo-title">倔强青铜包</h3>
+                        <p class="promo-desc">
+                            适合轻度用户，满足日常上网需求
+                        </p>
+                        <ul class="promo-features">
+                            <li>每月 50 GB 流量</li>
+                            <li>仅限个人使用</li>
+                            <li>不限制设备数</li>
+                            <li>解锁ChatGPT、Netflix、Disney+、TikTok</li>
+                            <li>Hy2 协议天花板，隧道加密极速安全</li>
+                            <li>处理问题时间：9.00-23.00正常情况下 1分钟内处理</li>
+                        </ul>
+                        <div class="promo-price">¥3.00/月</div>
+                        <a href="http://aip.acgf.vip:15432/" target="_blank" class="promo-btn">
+                            ✅ 立即购买
+                        </a>
+                        <div class="promo-discount">热销中</div>
+                    </div>
+
+                    <div class="promo-card featured">
+                        <span class="promo-tag">主力包</span>
+                        <span class="promo-icon">黄金</span>
+                        <h3 class="promo-title">荣耀黄金包</h3>
+                        <p class="promo-desc">
+                            适合个人小团体，流量更充足
+                        </p>
+                        <ul class="promo-features">
+                            <li>每月 120 GB 流量</li>
+                            <li>仅限个人小团体使用</li>
+                            <li>不限制设备数</li>
+                            <li>解锁ChatGPT、Netflix、Disney+、TikTok</li>
+                            <li>Hy2 协议天花板，隧道加密极速安全</li>
+                            <li>处理问题时间：9.00-23.00正常情况下 1分钟内处理</li>
+                        </ul>
+                        <div class="promo-price">¥7.00/月</div>
+                        <a href="http://aip.acgf.vip:15432/" target="_blank" class="promo-btn">
+                            ✅ 立即购买
+                        </a>
+                        <div class="promo-discount">性价比之选</div>
+                    </div>
+
+                    <div class="promo-card">
+                        <span class="promo-tag">至尊套餐</span>
+                        <span class="promo-icon">钻石</span>
+                        <h3 class="promo-title">永恒钻石包</h3>
+                        <p class="promo-desc">
+                            适合重度用户，享受极致体验
+                        </p>
+                        <ul class="promo-features">
+                            <li>每月 250 GB 流量</li>
+                            <li>仅限个人小团体使用</li>
+                            <li>不限制设备数</li>
+                            <li>解锁ChatGPT、Netflix、Disney+、TikTok</li>
+                            <li>Hy2 协议天花板，隧道加密极速安全</li>
+                            <li>处理问题时间：9.00-23.00正常情况下 1分钟内处理</li>
+                        </ul>
+                        <div class="promo-price">¥15.00/月</div>
+                        <a href="http://aip.acgf.vip:15432/" target="_blank" class="promo-btn">
+                            ✅ 立即购买
+                        </a>
+                        <div class="promo-discount">尊享服务</div>
+                    </div>
+
+                    <div class="promo-card">
+                        <span class="promo-tag">流量包</span>
+                        <span class="promo-icon">星耀</span>
+                        <h3 class="promo-title">至尊星耀补包</h3>
+                        <p class="promo-desc">
+                            10元100G不过期，灵活补充流量
+                        </p>
+                        <ul class="promo-features">
+                            <li>100G流量不限时用完为止</li>
+                            <li>不限制设备数</li>
+                            <li>解锁ChatGPT、Netflix、Disney+、TikTok</li>
+                            <li>在线客服售后保障</li>
+                        </ul>
+                        <div class="promo-price">¥10.00/一次性</div>
+                        <a href="http://aip.acgf.vip:15432/" target="_blank" class="promo-btn">
+                            ✅ 立即购买
+                        </a>
+                        <div class="promo-discount">流量补充</div>
+                    </div>
+
+                    <div class="promo-card">
+                        <span class="promo-tag">流量包</span>
+                        <span class="promo-icon">王者</span>
+                        <h3 class="promo-title">最强王者补包</h3>
+                        <p class="promo-desc">
+                            20元220G不过期，超值大流量
+                        </p>
+                        <ul class="promo-features">
+                            <li>220G流量不限时用完为止</li>
+                            <li>不限制设备数</li>
+                            <li>解锁ChatGPT、Netflix、Disney+、TikTok</li>
+                            <li>在线客服售后保障</li>
+                        </ul>
+                        <div class="promo-price">¥20.00/一次性</div>
+                        <a href="http://aip.acgf.vip:15432/" target="_blank" class="promo-btn">
+                            ✅ 立即购买
+                        </a>
+                        <div class="promo-discount">超值大流量</div>
+                    </div>
+
+                    <div class="promo-card">
+                        <span class="promo-tag">流量包</span>
+                        <span class="promo-icon">荣耀</span>
+                        <h3 class="promo-title">荣耀王者补包</h3>
+                        <p class="promo-desc">
+                            35元400G不过期，流量无忧
+                        </p>
+                        <ul class="promo-features">
+                            <li>400G流量不限时用完为止</li>
+                            <li>不限制设备数</li>
+                            <li>解锁ChatGPT、Netflix、Disney+、TikTok</li>
+                            <li>在线客服售后保障</li>
+                        </ul>
+                        <div class="promo-price">¥35.00/一次性</div>
+                        <a href="http://aip.acgf.vip:15432/" target="_blank" class="promo-btn">
+                            ✅ 立即购买
+                        </a>
+                        <div class="promo-discount">流量无忧</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        📋 选择指南
+                    </h2>
+                    <p class="card-description">
+                        如何选择适合自己的机场服务
+                    </p>
+                </div>
+
+                <div class="domain-examples">
+                    <strong>🎯 选择建议：</strong>
+                    
+                    <strong>轻度用户：</strong><br>
+                    选择倔强青铜包，50GB流量足够日常使用，性价比高<br>
+                    <br>
+                    <strong>个人小团体：</strong><br>
+                    选择荣耀黄金包，120GB流量更充足，适合多人共享<br>
+                    <br>
+                    <strong>重度用户：</strong><br>
+                    选择永恒钻石包，250GB流量无忧，享受极致体验<br>
+                    <br>
+                    <strong>流量补充：</strong><br>
+                    需要更多流量？选择星耀、王者或荣耀王者补包，按需购买<br>
+                    <br>
+                    <strong>💡 选择提示：</strong><br>
+                    - 根据实际需求选择合适套餐<br>
+                    - 流量包可随时补充，灵活使用<br>
+                    - 所有套餐均支持主流流媒体平台<br>
+                    - Hy2协议加密，安全无忧
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="toast" class="toast">
+        已跳转到机场官网
+    </div>
+
+    <footer class="footer">
+        <p>© 2024 HubProxy | <a href="https://github.com/sky22333/hubproxy" class="github-link" target="_blank">
+            <span>GitHub 项目</span>
+        </a></p>
+    </footer>
+
+    <script>
+        // 主题切换
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        });
+
+        if (localStorage.getItem('theme') === 'dark') {
+            html.classList.add('dark');
+        }
+
+        // 移动端菜单
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Toast 提示
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // 机场链接点击事件
+        const promoLinks = document.querySelectorAll('.promo-btn');
+        promoLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                showToast('正在跳转到机场官网...');
+            });
+        });
+    </script>
+</body>
+</html>

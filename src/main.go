@@ -8,12 +8,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gin-gonic/gin"
-	"golang.org/x/net/http2"
-	"golang.org/x/net/http2/h2c"
 	"hubproxy/config"
 	"hubproxy/handlers"
 	"hubproxy/utils"
+
+	"github.com/gin-gonic/gin"
+	"golang.org/x/net/http2"
+	"golang.org/x/net/http2/h2c"
 )
 
 //go:embed public/*
@@ -76,6 +77,9 @@ func buildRouter(cfg *config.AppConfig) *gin.Engine {
 		router.GET("/images.html", func(c *gin.Context) {
 			serveEmbedFile(c, "public/images.html")
 		})
+		router.GET("/proxy.html", func(c *gin.Context) {
+			serveEmbedFile(c, "public/proxy.html")
+		})
 		router.GET("/search.html", func(c *gin.Context) {
 			serveEmbedFile(c, "public/search.html")
 		})
@@ -90,6 +94,9 @@ func buildRouter(cfg *config.AppConfig) *gin.Engine {
 			c.Status(http.StatusNotFound)
 		})
 		router.GET("/images.html", func(c *gin.Context) {
+			c.Status(http.StatusNotFound)
+		})
+		router.GET("/proxy.html", func(c *gin.Context) {
 			c.Status(http.StatusNotFound)
 		})
 		router.GET("/search.html", func(c *gin.Context) {
